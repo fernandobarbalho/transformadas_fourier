@@ -7,7 +7,7 @@ devtools::install_github("tchiluanda/rtn")
 
 #Not Run
 
-time_series<- #inform a time series
+time_series<- "1.3 - Arrecadação Líquida para o RGPS" #inform a time series
 
 serie_artigo<-
   rtn::get_account_data_by_month(time_series, month = 1:12, match_required = FALSE) %>%
