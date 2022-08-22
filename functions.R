@@ -499,3 +499,31 @@ plot_periodgram<- function(.data,
 
   g
 }
+
+## Slow Discrete Fourier Transform (DFT) - e.g., for checking the formula
+fft0_v2 <- function(z, inverse=FALSE) {
+  n <- length(z)
+  if(n == 0) return(z)
+  k <- 0:(n-1)
+  ff <- (if(inverse) 1 else -1) * 2*pi * 1i * k/n
+
+  #soma<-NULL
+  purrr::map_dfr (1:n,function(h){
+    tibble(h=h,
+           z=z,
+           ff=ff,
+           real=Re(z * exp(ff*(h-1))),
+           imaginario= Im(z * exp(ff*(h-1))),
+           modulo= abs(z * exp(ff*(h-1))),
+           fase= atan(Im(z * exp(ff*(h-1)))/Re(z * exp(ff*(h-1)))))
+  })
+
+  #for (h in 1:n){
+     #soma<-c(soma,sum(z * exp(ff*(h-1)) + complex(1)))
+  #}
+
+  #soma
+
+  #vapply(1:n, function(h) sum(z * exp(ff*(h-1))), complex(1))
+}
+
